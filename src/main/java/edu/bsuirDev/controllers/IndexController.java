@@ -1,19 +1,33 @@
 package edu.bsuirDev.controllers;
 
-import org.springframework.stereotype.Controller;
+import edu.bsuirDev.database.UserSession;
+import edu.bsuirDev.database.models.Plan;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * the first controller
  * */
 
-@Controller
+@RestController
+@RequestMapping("/index")
 public class IndexController {
-    @RequestMapping("/")
-    @ResponseBody
-    String hello()
+
+    @GetMapping(produces="application/json")
+    Map<String, String> index(@RequestParam(value = "id") long id)
     {
-        return "Hello World!";
+        //не работает с неверным id
+        UserSession userSession = new UserSession(id);
+        HashMap<String, String> map = new HashMap<>();
+        for(Plan plan : userSession.getUser().getPlans()) {
+            map.put(plan.getInfo(), Long.toString(plan.getId()));
+        }
+
+        return map;
     }
 }
