@@ -8,6 +8,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserDAOImpl implements UserDAO {
@@ -60,6 +61,18 @@ public class UserDAOImpl implements UserDAO {
         session.close();
     }
 
+    public User find(User user) {
+        List<User> users = findAll();
+        for(User i : users) {
+            if(i.getMail().equals(user.getMail()) &&
+                    i.getName().equals(user.getName()) &&
+                    i.getPassword().equals(user.getPassword())) {
+                return i;
+            }
+        }
+        return null;
+    }
+
     public void delete(User user) {
         Session session = HibernateSessionFactory.getSessionFactory().openSession();
         Transaction tx1 = session.beginTransaction();
@@ -76,12 +89,41 @@ public class UserDAOImpl implements UserDAO {
         session.close();
     }
 
-    public Plan findPlanById(int id) {
+    public Plan findPlanById(long id) {
         return HibernateSessionFactory.getSessionFactory().openSession().get(Plan.class, id);
     }
+
 
     public List<User> findAll() {
         List<User> users = (List<User>)  HibernateSessionFactory.getSessionFactory().openSession().createQuery("From User").list();
         return users;
+    }
+
+    public List<Plan> findAllPlans(long id) {
+        List<Plan> temp = (List<Plan>)  HibernateSessionFactory.getSessionFactory().openSession().createQuery("From Plan").list();
+        List<Plan> plans = new ArrayList<>();
+        if(temp == null) {
+            return plans;
+        }
+        for(Plan plan : temp) {
+            if(plan.getUser().getId() == id) {
+                plans.add(plan);
+            }
+        }
+        return plans;
+    }
+
+    public List<Step> findAllSteps(long id) {
+        List<Step> temp = (List<Step>)  HibernateSessionFactory.getSessionFactory().openSession().createQuery("From Step").list();
+        List<Step> steps = new ArrayList<>();
+        if(temp == null) {
+            return steps;
+        }
+        for(Step step : temp) {
+            if(step.getPlan().getId() == id) {
+                steps.add(step);
+            }
+        }
+        return steps;
     }
 }
