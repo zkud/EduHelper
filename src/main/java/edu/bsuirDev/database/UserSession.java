@@ -13,10 +13,9 @@ public class UserSession {
     boolean isExist;
 
     public static void main(String[] argc) {
-        User user = new User("NotDimon", "MyMail", "helloworld");
         UserSession userSession = new UserSession(1);
+        Plan plan = userSession.getPlan(2);
 
-        List<Step> steps = userSession.getSteps(1);
     }
 
     public UserSession(User user) {
@@ -26,10 +25,6 @@ public class UserSession {
         if(temp != null) {
             this.isExist = true;
             this.user = temp;
-            this.user.setPlans(userDAO.findAllPlans(user.getId()));
-            for(Plan plan : user.getPlans()) {
-                plan.setSteps(userDAO.findAllSteps(plan.getId()));
-            }
         } else {
             this.isExist = false;
         }
@@ -38,10 +33,6 @@ public class UserSession {
     public UserSession(long id) {
         this.userDAO = new UserDAOImpl();
         this.user = userDAO.findById(id);
-        this.user.setPlans(userDAO.findAllPlans(id));
-        for(Plan plan : user.getPlans()) {
-            plan.setSteps(userDAO.findAllSteps(plan.getId()));
-        }
     }
 
     public User getUser() {
