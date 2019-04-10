@@ -18,17 +18,9 @@ public class UserDAOImpl implements UserDAO {
      */
     public static void main(String[] args) {
         UserDAOImpl userDAO = new UserDAOImpl();
-
-        User user = new User("NotDimon", "MyMail", "helloworld");
-        Plan plan = new Plan(13, "PPPLan");
-        Step step = new Step("String", new Date(100000), 45);
-        user.addPlan(plan);
-        plan.addStep(step);
-
-        userDAO.save(user);
-        User user1 = userDAO.findById(user.getId());
-        System.out.println(user1);
-        userDAO.deleteById(user.getId());
+        long id = 1;
+        Step step = HibernateSessionFactory.getSessionFactory().openSession().get(Step.class, id);
+        System.out.println(step);
     }
 
     public User findById(long id) {
@@ -100,30 +92,12 @@ public class UserDAOImpl implements UserDAO {
     }
 
     public List<Plan> findAllPlans(long id) {
-        List<Plan> temp = (List<Plan>)  HibernateSessionFactory.getSessionFactory().openSession().createQuery("From Plan").list();
-        List<Plan> plans = new ArrayList<>();
-        if(temp == null) {
-            return plans;
-        }
-        for(Plan plan : temp) {
-            if(plan.getUser().getId() == id) {
-                plans.add(plan);
-            }
-        }
+        List<Plan> plans = (List<Plan>) HibernateSessionFactory.getSessionFactory().openSession().createQuery("From Plan where owner_id = " + id).list();
         return plans;
     }
 
     public List<Step> findAllSteps(long id) {
-        List<Step> temp = (List<Step>)  HibernateSessionFactory.getSessionFactory().openSession().createQuery("From Step").list();
-        List<Step> steps = new ArrayList<>();
-        if(temp == null) {
-            return steps;
-        }
-        for(Step step : temp) {
-            if(step.getPlan().getId() == id) {
-                steps.add(step);
-            }
-        }
+        List<Step> steps = (List<Step>) HibernateSessionFactory.getSessionFactory().openSession().createQuery("From Step where plan_id = " + id).list();
         return steps;
     }
 }
