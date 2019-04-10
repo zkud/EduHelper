@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -27,11 +29,17 @@ public class PlanInfoController {
         mapPlan.put("name", plan.getInfo());
         mapPlan.put("expected result", Double.toString(plan.getResult()));
 
-        HashMap<String, String> mapStep = new HashMap<>();
-        for(Step step : userSession.getSteps(planid)) {
-            mapStep.put("name", step.getName());
+        HashMap<String, String> mapSteps = new HashMap<>();
+        HashMap<String, String> mapOneStep = new HashMap<>();
+        List<Step> list = userSession.getSteps(planid);
+        for (Step step : list) {
+            mapOneStep.put("name", step.getName());
+            mapOneStep.put("deadline", step.getDeadline().toString());
+            mapOneStep.put("cost", Double.toString(step.getCost()));
+            mapOneStep.put("complete", Boolean.toString(step.isComplete()));
+            mapSteps.put(Long.toString(step.getId()), mapOneStep.toString());
         }
-       // mapPlan.put("steps", mapStep.toString());
+        mapPlan.put("steps", mapSteps.toString());
         return mapPlan;
     }
 
