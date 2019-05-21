@@ -21,9 +21,12 @@ public class IndexController {
     @GetMapping(produces="application/json")
     Map<String, String> index(@RequestParam(value = "id") long id)
     {
-        //не работает с неверным id
         UserSession userSession = new UserSession(id);
         HashMap<String, String> map = new HashMap<>();
+        if(userSession.getUser() == null) {
+            map.put("null", "null");
+            return map;
+        }
         for(Plan plan : userSession.getUser().getPlans()) {
             map.put(plan.getInfo(), Long.toString(plan.getId()));
         }
