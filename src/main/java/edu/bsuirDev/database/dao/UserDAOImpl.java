@@ -32,7 +32,7 @@ public class UserDAOImpl implements UserDAO {
         if(user == null) {
             return null;
         } else {
-        this.delete(user);
+        this.deleteUser(user);
         return user;
         }
     }
@@ -46,8 +46,18 @@ public class UserDAOImpl implements UserDAO {
     }
 
     public void update(User user) {
-        Session session = HibernateSessionFactory.getSessionFactory().openSession();
-        Transaction tx1 = session.beginTransaction();
+          Session session = HibernateSessionFactory.getSessionFactory().openSession();
+          Transaction tx1 = session.beginTransaction();
+//        if(user.getPlans() != null) {
+//            for (Plan plan : user.getPlans()) {
+//                if(plan.getSteps() != null) {
+//                    for(Step step : plan.getSteps()) {
+//                        session.update(step);
+//                    }
+//                    session.update(plan);
+//                }
+//            }
+//        }
         session.update(user);
         tx1.commit();
         session.close();
@@ -65,7 +75,7 @@ public class UserDAOImpl implements UserDAO {
         return null;
     }
 
-    public void delete(User user) {
+    public void deleteUser(User user) {
         Session session = HibernateSessionFactory.getSessionFactory().openSession();
         Transaction tx1 = session.beginTransaction();
         for (Plan plan : user.getPlans()) {
@@ -77,6 +87,27 @@ public class UserDAOImpl implements UserDAO {
         }
         user.setPlans(null);
         session.delete(user);
+        tx1.commit();
+        session.close();
+    }
+
+    public void deletePlan(Plan plan) {
+        Session session = HibernateSessionFactory.getSessionFactory().openSession();
+        Transaction tx1 = session.beginTransaction();
+
+        for(Step step : plan.getSteps()) {
+                session.delete(step);
+        }
+        plan.setSteps(null);
+        session.delete(plan);
+        tx1.commit();
+        session.close();
+    }
+
+    public void deleteStep(Step step) {
+        Session session = HibernateSessionFactory.getSessionFactory().openSession();
+        Transaction tx1 = session.beginTransaction();
+        session.delete(step);
         tx1.commit();
         session.close();
     }
