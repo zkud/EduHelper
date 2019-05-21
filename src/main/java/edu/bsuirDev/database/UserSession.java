@@ -13,9 +13,9 @@ public class UserSession {
     UserDAOImpl userDAO;
 
     public static void main(String[] argc) {
+        Step step = new Step();
         UserSession userSession = new UserSession(1);
-        Plan plan = userSession.getPlan(2);
-        userSession.removeStep(1, 3);
+        userSession.addStep(14, step);
     }
 
     public static UserSession createNewUser(String name, String mail, String password) {
@@ -24,7 +24,7 @@ public class UserSession {
         if(userSession.user == null) {
             UserDAO userDAO = new UserDAOImpl();
             userSession.user = user;
-            userDAO.save(user);
+            userDAO.saveUser(user);
         }
         else
         {
@@ -64,7 +64,7 @@ public class UserSession {
     }
 
     public void saveUser() {
-        userDAO.save(user);
+        userDAO.saveUser(user);
     }
 
     public void deleteUser() {
@@ -98,13 +98,15 @@ public class UserSession {
     }
 
     public void addPlan(Plan plan) {
-        user.addPlan(plan);
+        if(user != null) {
+            userDAO.savePlan(user, plan);
+        }
     }
 
     public void addStep(long id, Step step) {
         for(Plan plan : user.getPlans()) {
             if(plan.getId() == id) {
-                plan.addStep(step);
+                userDAO.saveStep(plan, step);
                 break;
             }
         }
