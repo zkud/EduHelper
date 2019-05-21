@@ -1,6 +1,7 @@
 package edu.bsuirDev.database;
 
 
+import edu.bsuirDev.database.dao.UserDAO;
 import edu.bsuirDev.database.dao.UserDAOImpl;
 import edu.bsuirDev.database.models.*;
 
@@ -10,24 +11,38 @@ public class UserSession {
 
     User user;
     UserDAOImpl userDAO;
-    boolean isExist;
 
     public static void main(String[] argc) {
         UserSession userSession = new UserSession(1);
         Plan plan = userSession.getPlan(2);
+        userSession.removeStep(1, 3);
+    }
 
+    public static UserSession createNewUser(String name, String mail, String password) {
+        User user = new User(name, mail, password);
+        UserSession userSession = new UserSession(user);
+        if(userSession.user == null) {
+            UserDAO userDAO = new UserDAOImpl();
+            userSession.user = user;
+            userDAO.save(user);
+        }
+        else
+        {
+            return null;
+        }
+        return userSession;
+    }
+
+    public UserSession(String name, String mail, String password) {
+        this.user = new User(name, mail, password);
+        this.userDAO = new UserDAOImpl();
+        this.user = this.userDAO.find(user);
     }
 
     public UserSession(User user) {
         this.user = user;
         this.userDAO = new UserDAOImpl();
-        User temp = this.userDAO.find(user);
-        if(temp != null) {
-            this.isExist = true;
-            this.user = temp;
-        } else {
-            this.isExist = false;
-        }
+        this.user = this.userDAO.find(user);
     }
 
     public UserSession(long id) {
@@ -49,17 +64,11 @@ public class UserSession {
     }
 
     public void saveUser() {
-        if(isExist) {
-            userDAO.update(user);
-        } else {
-            userDAO.save(user);
-            isExist = true;
-        }
+        userDAO.save(user);
     }
 
     public void deleteUser() {
-        userDAO.delete(user);
-        isExist = false;
+        userDAO.deleteUser(user);
     }
 
     public List<Plan> getPlans() {
@@ -102,21 +111,33 @@ public class UserSession {
     }
 
     public void removePlan(long id) {
+        if(user.getPlans() == null)
+        {
+            return;
+        }
         for(Plan plan : user.getPlans()) {
             if(plan.getId() == id) {
-                user.removePlan(plan);
+                userDAO.deletePlan(plan);
                 break;
             }
         }
     }
 
-    public void removeStep(long id) {
+    public void removeStep(long planid, long stepid) {
+        if(user.getPlans() == null) {
+            return;
+        }
         for(Plan plan : user.getPlans()) {
-            for(Step step : plan.getSteps()) {
-                if(step.getId() == id)
-                {
-                    plan.removeStep(step);
-                    return;
+            if(plan.getSteps() == null) {
+                continue;
+            }
+            if(plan.getId() == planid) {
+                for (Step step : plan.getSteps()) {
+                    if (step.getId() == stepid) {
+                        //plan.removeStep(step);
+                        userDAO.deleteStep(step);
+                        return;
+                    }
                 }
             }
         }
