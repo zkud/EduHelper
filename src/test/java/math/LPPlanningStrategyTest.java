@@ -11,6 +11,7 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+/*
 public class LPPlanningStrategyTest {
     public static void test() {
         // form next day
@@ -46,4 +47,4 @@ public class LPPlanningStrategyTest {
             System.out.println(step.getName() + " " + step.getCost());
         }
     }
-}
+} */

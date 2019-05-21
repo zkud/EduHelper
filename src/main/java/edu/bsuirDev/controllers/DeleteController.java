@@ -1,6 +1,5 @@
 package edu.bsuirDev.controllers;
 
-
 import edu.bsuirDev.database.UserSession;
 import edu.bsuirDev.database.models.Plan;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -52,12 +52,12 @@ public class LPPlanningStrategy extends PlanningStrategy {
     private LinearObjectiveFunction convertTasksToFunction() {
         tasks.sort(
                 Comparator.comparing(
-                        (Task task) -> task.getCost() / task.getCount()
+                        (Task task) -> task.getCost() / task.getVariantsCount()
                 ).reversed()
         ); // sort by coef
 
         return new LinearObjectiveFunction(
-                tasks.stream().mapToDouble((task) -> task.getCost() / task.getCount()).toArray(),
+                tasks.stream().mapToDouble((task) -> task.getCost() / task.getVariantsCount()).toArray(),
                 0
         );
     }
@@ -80,7 +80,7 @@ public class LPPlanningStrategy extends PlanningStrategy {
 
             // form constraint
             //  0 <= count of implemented task variants <= max count
-            constraints.add(new LinearConstraint(maskVector, Relationship.LEQ, task.getCount()));
+            constraints.add(new LinearConstraint(maskVector, Relationship.LEQ, task.getVariantsCount()));
             constraints.add(new LinearConstraint(maskVector, Relationship.GEQ, 0));
         }
 
@@ -113,8 +113,8 @@ public class LPPlanningStrategy extends PlanningStrategy {
             for (Task task : tasks) {
                 int count = (int) solution.getPoint()[taskIndex];
 
-                while (count-- > 0) {
-                    resultPlan.addStep(new Step(task.getName(), deadline, task.getCost() / task.getCount()));
+                while (count  --> 0) {
+                    resultPlan.addStep(new Step(task.getName(), deadline, task.getCost() / task.getVariantsCount()));
                 }
 
                 taskIndex++;
