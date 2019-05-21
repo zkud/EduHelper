@@ -37,10 +37,28 @@ public class UserDAOImpl implements UserDAO {
         }
     }
 
-    public void save(User user) {
+    public void saveUser(User user) {
         Session session = HibernateSessionFactory.getSessionFactory().openSession();
         Transaction tx1 = session.beginTransaction();
         session.save(user);
+        tx1.commit();
+        session.close();
+    }
+
+    public void savePlan(User user, Plan plan) {
+        user.addPlan(plan);
+        Session session = HibernateSessionFactory.getSessionFactory().openSession();
+        Transaction tx1 = session.beginTransaction();
+        session.save(plan);
+        tx1.commit();
+        session.close();
+    }
+
+    public void saveStep(Plan plan, Step step) {
+        plan.addStep(step);
+        Session session = HibernateSessionFactory.getSessionFactory().openSession();
+        Transaction tx1 = session.beginTransaction();
+        session.save(step);
         tx1.commit();
         session.close();
     }

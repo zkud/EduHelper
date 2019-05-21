@@ -9,9 +9,11 @@ import java.util.List;
 public interface UserDAO {
     public User findById(long id);
 
-    public void save(User user);
+    public void saveUser(User user);
 
-    public void update(User user);
+    public void savePlan(User user, Plan plan);
+
+    public void saveStep(Plan plan, Step step);
 
     public void deleteUser(User user);
 
