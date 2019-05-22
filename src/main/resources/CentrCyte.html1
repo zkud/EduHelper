@@ -1,0 +1,77 @@
+<html lang="ru" class="translated-ltr">
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="centrCyte.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+<body onload="loadProject()">
+<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+    <h5 class="my-0 mr-md-auto font-weight-normal"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Help</font></font></h5>
+    <nav class="my-2 my-md-0 mr-md-3">
+        <a class="p-2 text-dark" href="#"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Доки </font></font></a>
+        <a class="p-2 text-dark" href="#"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">блабла </font></font></a>
+        <a class="p-2 text-dark" href="#"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">блабла </font></font></a>
+    </nav>
+    <a class="btn btn-outline-primary" href="#"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">магия</font></font></a>
+</div>
+
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">МОИ ПРОЕТЫ</font></font></h1>
+    <p class="lead"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> Какая нибудь инфа</font></p>
+</div>
+
+<div class="container">
+
+    <ol id="ol_table">
+        <li>
+            <div><input value="static" class="col-3"></input><button class="col-3 btn" id="vvod" onclick="sentdata();">vvod</button></div>
+        </li>
+
+    </ol>
+    <button id="plus" onclick="addprodject();">plus</button>
+
+    <footer class="pt-4 my-md-5 pt-md-5 border-top">
+        <div class="row">
+            <div class="col-12 col-md">
+                <img class="mb-2" src="/docs/4.3/assets/brand/bootstrap-solid.svg" alt="" width="24" height="24">
+                <small class="d-block mb-3 text-muted"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">© 2017-2019</font></font></small>
+            </div>
+            <div class="col-6 col-md">
+                <h5><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Характеристики</font></font></h5>
+                <ul class="list-unstyled text-small">
+                    <li><a class="text-muted" href="#"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Отличная вещь</font></font></a></li>
+                    <li><a class="text-muted" href="#"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Случайная функция</font></font></a></li>
+                    <li><a class="text-muted" href="#"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Особенность команды</font></font></a></li>
+                    <li><a class="text-muted" href="#"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Вещи для разработчиков</font></font></a></li>
+                    <li><a class="text-muted" href="#"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Другой</font></font></a></li>
+                    <li><a class="text-muted" href="#"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Последний раз</font></font></a></li>
+                </ul>
+            </div>
+            <div class="col-6 col-md">
+                <h5><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Ресурсы</font></font></h5>
+                <ul class="list-unstyled text-small">
+                    <li><a class="text-muted" href="#"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Ресурс</font></font></a></li>
+                    <li><a class="text-muted" href="#"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Название ресурса</font></font></a></li>
+                    <li><a class="text-muted" href="#"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Еще один ресурс</font></font></a></li>
+                    <li><a class="text-muted" href="#"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Конечный ресурс</font></font></a></li>
+                </ul>
+            </div>
+            <div class="col-6 col-md">
+                <h5><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Около</font></font></h5>
+                <ul class="list-unstyled text-small">
+                    <li><a class="text-muted" href="#"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">команда</font></font></a></li>
+                    <li><a class="text-muted" href="#"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Места</font></font></a></li>
+                    <li><a class="text-muted" href="#"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Конфиденциальность</font></font></a></li>
+                    <li><a class="text-muted" href="#"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">термины</font></font></a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+</div>
+</body>
+
+</html>
