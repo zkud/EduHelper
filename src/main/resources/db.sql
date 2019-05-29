@@ -12,97 +12,97 @@ SET default_tablespace = '';
 
 SET default_with_oids = false;
 
-CREATE TABLE public."PLANS" (
-    "OWNER_ID" bigint,
-    "ID" bigint NOT NULL,
-    "RESULT" double precision,
-    "INFO" text
+CREATE TABLE public."plans" (
+    "owner_id" bigint,
+    "id" bigint NOT NULL,
+    "result" double precision,
+    "info" text
 );
 
-ALTER TABLE public."PLANS" OWNER TO sister;
+ALTER TABLE public."plans" OWNER TO postgres;
 
-COMMENT ON TABLE public."PLANS" IS 'stores plans of users';
+COMMENT ON TABLE public."plans" IS 'stores plans of users';
 
-CREATE SEQUENCE public."PLANS_ID_seq"
+CREATE SEQUENCE public."plans_id_seq"
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
 
-ALTER TABLE public."PLANS_ID_seq" OWNER TO sister;
+ALTER TABLE public."plans_id_seq" OWNER TO postgres;
 
-ALTER SEQUENCE public."PLANS_ID_seq" OWNED BY public."PLANS"."ID";
+ALTER SEQUENCE public."plans_id_seq" OWNED BY public."plans"."id";
 
-CREATE TABLE public."STEPS" (
-    "PLAN_ID" bigint,
-    "NAME" text,
-    "DEADLINE" timestamp with time zone,
-    "COMPLETE" boolean,
-    "COST" double precision,
-    "ID" bigint NOT NULL
+CREATE TABLE public."steps" (
+    "plan_id" bigint,
+    "name" text,
+    "deadline" timestamp with time zone,
+    "complete" boolean,
+    "cost" double precision,
+    "id" bigint NOT NULL
 );
 
-ALTER TABLE public."STEPS" OWNER TO sister;
+ALTER TABLE public."steps" OWNER TO postgres;
 
-COMMENT ON TABLE public."STEPS" IS 'stores steps of plans';
+COMMENT ON TABLE public."steps" IS 'stores steps of plans';
 
-CREATE SEQUENCE public."STEPS_ID_seq"
+CREATE SEQUENCE public."steps_id_seq"
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
 
-ALTER TABLE public."STEPS_ID_seq" OWNER TO sister;
+ALTER TABLE public."steps_id_seq" OWNER TO postgres;
 
-ALTER SEQUENCE public."STEPS_ID_seq" OWNED BY public."STEPS"."ID";
+ALTER SEQUENCE public."steps_id_seq" OWNED BY public."steps"."id";
 
-CREATE TABLE public."USERS" (
-    "ID" bigint NOT NULL,
-    "NAME" text,
-    "MAIL" text,
-    "PASSWORD" text
+CREATE TABLE public."users" (
+    "id" bigint NOT NULL,
+    "name" text,
+    "mail" text,
+    "password" text
 );
 
-ALTER TABLE public."USERS" OWNER TO sister;
+ALTER TABLE public."users" OWNER TO postgres;
 
-COMMENT ON TABLE public."USERS" IS 'stores users data';
+COMMENT ON TABLE public."users" IS 'stores users data';
 
-CREATE SEQUENCE public."USERS_id_seq"
+CREATE SEQUENCE public."users_id_seq"
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
 
-ALTER TABLE public."USERS_id_seq" OWNER TO sister;
+ALTER TABLE public."users_id_seq" OWNER TO postgres;
 
-ALTER SEQUENCE public."USERS_id_seq" OWNED BY public."USERS"."ID";
+ALTER SEQUENCE public."users_id_seq" OWNED BY public."users"."id";
 
-ALTER TABLE ONLY public."PLANS" ALTER COLUMN "ID" SET DEFAULT nextval('public."PLANS_ID_seq"'::regclass);
+ALTER TABLE ONLY public."plans" ALTER COLUMN "id" SET DEFAULT nextval('public."plans_id_seq"'::regclass);
 
-ALTER TABLE ONLY public."STEPS" ALTER COLUMN "ID" SET DEFAULT nextval('public."STEPS_ID_seq"'::regclass);
+ALTER TABLE ONLY public."steps" ALTER COLUMN "id" SET DEFAULT nextval('public."steps_id_seq"'::regclass);
 
-ALTER TABLE ONLY public."USERS" ALTER COLUMN "ID" SET DEFAULT nextval('public."USERS_id_seq"'::regclass);
+ALTER TABLE ONLY public."users" ALTER COLUMN "id" SET DEFAULT nextval('public."users_id_seq"'::regclass);
 
-SELECT pg_catalog.setval('public."PLANS_ID_seq"', 3, true);
+SELECT pg_catalog.setval('public."plans_id_seq"', 3, true);
 
-SELECT pg_catalog.setval('public."STEPS_ID_seq"', 1, true);
+SELECT pg_catalog.setval('public."steps_id_seq"', 1, true);
 
-SELECT pg_catalog.setval('public."USERS_id_seq"', 7, true);
+SELECT pg_catalog.setval('public."users_id_seq"', 7, true);
 
-ALTER TABLE ONLY public."PLANS"
-    ADD CONSTRAINT "PLANS_PK" PRIMARY KEY ("ID");
+ALTER TABLE ONLY public."plans"
+    ADD CONSTRAINT "plans_pk" PRIMARY KEY ("id");
 
-ALTER TABLE ONLY public."STEPS"
-    ADD CONSTRAINT "STEPS_PK" PRIMARY KEY ("ID");
+ALTER TABLE ONLY public."plans"
+    ADD CONSTRAINT "steps_pk" PRIMARY KEY ("id");
 
-ALTER TABLE ONLY public."USERS"
-    ADD CONSTRAINT "USERS_PK" PRIMARY KEY ("ID");
+ALTER TABLE ONLY public."users"
+    ADD CONSTRAINT "users_pk" PRIMARY KEY ("id");
 
-ALTER TABLE ONLY public."PLANS"
-    ADD CONSTRAINT "OWNER_ID_FK" FOREIGN KEY ("OWNER_ID") REFERENCES public."USERS"("ID") ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE ONLY public."plans"
+    ADD CONSTRAINT "owner_id_fk" FOREIGN KEY ("owner_id") REFERENCES public."users"("id") ON UPDATE CASCADE ON DELETE CASCADE;
 
-ALTER TABLE ONLY public."STEPS"
-    ADD CONSTRAINT "PLAN_ID" FOREIGN KEY ("PLAN_ID") REFERENCES public."PLANS"("ID") ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE ONLY public."steps"
+    ADD CONSTRAINT "plan_id" FOREIGN KEY ("plan_id") REFERENCES public."plans"("id") ON UPDATE CASCADE ON DELETE CASCADE;
