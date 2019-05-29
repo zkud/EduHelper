@@ -95,7 +95,7 @@ SELECT pg_catalog.setval('public."users_id_seq"', 7, true);
 ALTER TABLE ONLY public."plans"
     ADD CONSTRAINT "plans_pk" PRIMARY KEY ("id");
 
-ALTER TABLE ONLY public."plans"
+ALTER TABLE ONLY public."steps"
     ADD CONSTRAINT "steps_pk" PRIMARY KEY ("id");
 
 ALTER TABLE ONLY public."users"
